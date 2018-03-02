@@ -7,19 +7,10 @@ time.sleep(1)
 
 
 def draw_boxes_around_shapes(my_contours,img):
-    # if len(areas) != 0:
-    #     for thing in areas:
-    #         print("Size of a contour:",thing)
-    #     max_index = np.argmax(areas)
-    #     cnt = contours[max_index]
-    #     x,y,w,h = cv2.boundingRect(cnt)
-    #     cv2.rectangle(dst,(x,y),(x+w,y+h),(0,255,0),2)
-    #     print("Number of contours detected:",len(areas))
     for each_contour in my_contours:
         print("Size of contour:", cv2.contourArea(each_contour))
         x,y,w,h = cv2.boundingRect(each_contour)
         cv2.rectangle(img, (x,y),(x+w,y+h),(0,255,0),2)
-        
 
     
 
@@ -57,7 +48,6 @@ while True:
     _, contours, _ = cv2.findContours(closing, cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
     
     # Fills areas with contours that have an Area greater than 800
-    areas = [cv2.contourArea(c) for c in contours if cv2.contourArea(c) > 800]
     list_of_good_contours = [c for c in contours if cv2.contourArea(c) > 800]
     
 
@@ -72,12 +62,7 @@ while True:
 
     if len(areas) != 0:
         draw_boxes_around_shapes(list_of_good_contours, dst)
-        
-        max_index = np.argmax(areas)
-        cnt = contours[max_index]
-        # x,y,w,h = cv2.boundingRect(cnt)
-        # cv2.rectangle(dst,(x,y),(x+w,y+h),(0,255,0),2)
-        print("Number of contours detected:",len(areas))
+        print("Number of contours detected:",len(list_of_good_contours))
     else:
         print("No contours detected")
 
@@ -89,5 +74,5 @@ while True:
 
 
 
-cap.release
+cap.release()
 cv2.destroyAllWindows()
