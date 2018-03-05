@@ -7,10 +7,15 @@ time.sleep(1)
 
 
 def draw_boxes_around_shapes(my_contours,img):
+    number = 1
     for each_contour in my_contours:
         print("Size of contour:", cv2.contourArea(each_contour))
         x,y,w,h = cv2.boundingRect(each_contour)
         cv2.rectangle(img, (x,y),(x+w,y+h),(0,255,0),2)
+        font = cv2.FONT_HERSHEY_PLAIN
+        cv2.putText(img,'Blue',(x,y -5),font, 2, (255,100,255),2,cv2.LINE_AA)
+        cv2.putText(img, str(number), (x+w,y-5),font,2,(100,255,255),2,cv2.LINE_AA)
+        number+=1
 
     
 
@@ -60,7 +65,7 @@ while True:
 
     # cv2.drawContours(dst,contours,-1, (0,0,255), 2)
 
-    if len(areas) != 0:
+    if len(list_of_good_contours) != 0:
         draw_boxes_around_shapes(list_of_good_contours, dst)
         print("Number of contours detected:",len(list_of_good_contours))
     else:
